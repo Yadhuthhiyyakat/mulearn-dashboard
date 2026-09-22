@@ -75,14 +75,17 @@ export function NotificationPopover() {
     () => feedData?.pages.flatMap((page) => page.results) ?? [],
     [feedData],
   );
-  const unreadNotifications = notifications.filter((n) => !n.is_read);
+  const unreadPersonalNotifications = notifications.filter(
+    (n) => n.source === "personal" && !n.is_read,
+  );
   const hasUnread = unreadCount > 0;
   const hasPersonalNotifications = notifications.some(
     (n) => n.source === "personal",
   );
 
-  // IDs eligible for selection (unread only; broadcast IDs are silently skipped by the server)
-  const selectableIds = unreadNotifications.map((n) => n.id);
+  // IDs eligible for selection: only unread personal notifications
+  // (broadcast notifications are not supported by the bulk-read endpoint)
+  const selectableIds = unreadPersonalNotifications.map((n) => n.id);
   const allSelected =
     selectableIds.length > 0 &&
     selectableIds.every((id) => selectedIds.has(id));
@@ -179,33 +182,35 @@ export function NotificationPopover() {
 
           {/* Right: action buttons — never shrink */}
           <div className="flex shrink-0 items-center gap-1">
-            {/* Select toggle — only when there are unread items */}
-            {!isLoading && !isError && unreadNotifications.length > 0 && (
-              <Button
-                id="notification-select-toggle"
-                size="sm"
-                variant={selectMode ? "secondary" : "ghost"}
-                className="h-7 px-2 text-xs gap-1.5"
-                onClick={() =>
-                  selectMode ? exitSelectMode() : setSelectMode(true)
-                }
-                aria-label={
-                  selectMode ? "Cancel selection" : "Select notifications"
-                }
-              >
-                {selectMode ? (
-                  <>
-                    <X className="h-3 w-3" />
-                    Cancel
-                  </>
-                ) : (
-                  <>
-                    <ListChecks className="h-3 w-3" />
-                    Select
-                  </>
-                )}
-              </Button>
-            )}
+            {/* Select toggle — only when there are unread personal items */}
+            {!isLoading &&
+              !isError &&
+              unreadPersonalNotifications.length > 0 && (
+                <Button
+                  id="notification-select-toggle"
+                  size="sm"
+                  variant={selectMode ? "secondary" : "ghost"}
+                  className="h-7 px-2 text-xs gap-1.5"
+                  onClick={() =>
+                    selectMode ? exitSelectMode() : setSelectMode(true)
+                  }
+                  aria-label={
+                    selectMode ? "Cancel selection" : "Select notifications"
+                  }
+                >
+                  {selectMode ? (
+                    <>
+                      <X className="h-3 w-3" />
+                      Cancel
+                    </>
+                  ) : (
+                    <>
+                      <ListChecks className="h-3 w-3" />
+                      Select
+                    </>
+                  )}
+                </Button>
+              )}
 
             {/* Mark all read — only in normal mode */}
             {!selectMode && hasUnread && (
@@ -263,7 +268,8 @@ export function NotificationPopover() {
         ) : (
           <div className="flex flex-col gap-2 overflow-y-auto max-h-[360px] pr-1">
             {notifications.map((item) => {
-              const isSelectable = selectMode && !item.is_read;
+              const isSelectable =
+                selectMode && item.source === "personal" && !item.is_read;
               return (
                 <div
                   key={item.id}
