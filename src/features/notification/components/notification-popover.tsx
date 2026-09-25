@@ -220,14 +220,14 @@ export function NotificationPopover() {
                 className="h-7 px-2 text-xs gap-1.5"
                 onClick={() => markAllRead()}
                 disabled={isMarkingAll}
-                aria-label="Mark all as read"
+                aria-label="Mark all notifications as read"
               >
                 {isMarkingAll ? (
                   <Loader2 className="h-3 w-3 animate-spin" />
                 ) : (
                   <CheckCheck className="h-3 w-3" />
                 )}
-                Mark all
+                Mark all read
               </Button>
             )}
           </div>
@@ -312,7 +312,7 @@ export function NotificationPopover() {
                   className="w-full text-xs text-muted-foreground h-8 hover:text-foreground"
                   onClick={() => fetchNextPage()}
                   disabled={isFetchingNextPage}
-                  aria-label="Load older notifications"
+                  aria-label="Load more notifications"
                 >
                   {isFetchingNextPage ? (
                     <>
@@ -320,7 +320,7 @@ export function NotificationPopover() {
                       Loading more…
                     </>
                   ) : (
-                    "Load older notifications"
+                    "Load more notifications"
                   )}
                 </Button>
               </div>
@@ -328,74 +328,72 @@ export function NotificationPopover() {
           </div>
         )}
         {/* ── Footer ── */}
-        {!isLoading && !isError && (
-          <>
-            {selectMode
-              ? /* Multi-select action bar — appears only when ≥1 item is checked */
-                selectedIds.size > 0 && (
-                  <>
-                    <Separator className="mt-3 mb-2" />
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground">
-                        {selectedIds.size} selected
-                      </span>
-                      <div className="flex items-center gap-1.5">
-                        <Button
-                          id="delete-selected-btn"
-                          size="sm"
-                          variant="ghost"
-                          className="h-7 px-3 text-xs gap-1.5 text-destructive hover:text-destructive hover:bg-destructive/10"
-                          onClick={handleDeleteSelected}
-                          aria-label="Delete selected notifications"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                          Delete
-                        </Button>
-                        <Button
-                          id="mark-selected-read-btn"
-                          size="sm"
-                          variant="default"
-                          className="h-7 px-3 text-xs gap-1.5"
-                          onClick={handleMarkSelectedRead}
-                          disabled={isMarkingMany}
-                          aria-label="Mark selected notifications as read"
-                        >
-                          {isMarkingMany ? (
-                            <Loader2 className="h-3 w-3 animate-spin" />
-                          ) : (
-                            <CheckCheck className="h-3 w-3" />
-                          )}
-                          Mark read
-                        </Button>
-                      </div>
-                    </div>
-                  </>
-                )
-              : /* Normal footer: clear personal */
-                hasPersonalNotifications && (
-                  <>
-                    <Separator className="mt-3 mb-2" />
-                    <div className="flex justify-end">
+        {!isLoading &&
+          !isError &&
+          (selectMode
+            ? /* Multi-select action bar — appears only when ≥1 item is checked */
+              selectedIds.size > 0 && (
+                <>
+                  <Separator className="mt-3 mb-2" />
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">
+                      {selectedIds.size} selected
+                    </span>
+                    <div className="flex items-center gap-1.5">
                       <Button
+                        id="delete-selected-btn"
                         size="sm"
                         variant="ghost"
-                        className="h-7 px-2 text-xs text-muted-foreground gap-1.5 hover:text-destructive"
-                        onClick={() => deleteAllPersonal()}
-                        disabled={isDeletingAll}
-                        aria-label="Delete all personal notifications"
+                        className="h-7 px-3 text-xs gap-1.5 text-destructive hover:text-destructive hover:bg-destructive/10"
+                        onClick={handleDeleteSelected}
+                        aria-label="Delete selected notifications"
                       >
-                        {isDeletingAll ? (
+                        <Trash2 className="h-3 w-3" />
+                        Delete
+                      </Button>
+                      <Button
+                        id="mark-selected-read-btn"
+                        size="sm"
+                        variant="default"
+                        className="h-7 px-3 text-xs gap-1.5"
+                        onClick={handleMarkSelectedRead}
+                        disabled={isMarkingMany}
+                        aria-label="Mark selected notifications as read"
+                      >
+                        {isMarkingMany ? (
                           <Loader2 className="h-3 w-3 animate-spin" />
                         ) : (
-                          <Trash2 className="h-3 w-3" />
+                          <CheckCheck className="h-3 w-3" />
                         )}
-                        Clear personal
+                        Mark as read
                       </Button>
                     </div>
-                  </>
-                )}
-          </>
-        )}
+                  </div>
+                </>
+              )
+            : /* Normal footer: clear personal */
+              hasPersonalNotifications && (
+                <>
+                  <Separator className="mt-3 mb-2" />
+                  <div className="flex justify-end">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="h-7 px-2 text-xs text-muted-foreground gap-1.5 hover:text-destructive"
+                      onClick={() => deleteAllPersonal()}
+                      disabled={isDeletingAll}
+                      aria-label="Clear personal notifications"
+                    >
+                      {isDeletingAll ? (
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                      ) : (
+                        <Trash2 className="h-3 w-3" />
+                      )}
+                      Clear notifications
+                    </Button>
+                  </div>
+                </>
+              ))}
       </PopoverContent>
     </Popover>
   );

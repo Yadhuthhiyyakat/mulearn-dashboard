@@ -163,7 +163,7 @@ export function useDeleteAllPersonalNotifications() {
       queryClient.invalidateQueries({
         queryKey: notificationKeys.unreadCount(),
       });
-      toast.success("Personal notifications cleared");
+      toast.success("Notifications cleared");
     },
     onError: (error) => {
       toast.error(
@@ -192,12 +192,12 @@ export function useDispatchAdminBroadcast() {
       queryClient.invalidateQueries({
         queryKey: notificationKeys.unreadCount(),
       });
-      toast.success("Broadcast dispatched successfully.");
+      toast.success("Announcement sent successfully.");
     },
     onError: (error) => {
       toast.error(
         getApiResponseError(error, {
-          fallback: "Failed to dispatch broadcast",
+          fallback: "Failed to send announcement",
         }),
       );
     },
@@ -265,11 +265,13 @@ export function useCreateBroadcast() {
       queryClient.invalidateQueries({
         queryKey: notificationKeys.adminBroadcasts(),
       });
-      toast.success("Broadcast created");
+      toast.success("Announcement created");
     },
     onError: (error) => {
       toast.error(
-        getApiResponseError(error, { fallback: "Failed to create broadcast" }),
+        getApiResponseError(error, {
+          fallback: "Failed to create announcement",
+        }),
       );
     },
   });
@@ -289,11 +291,13 @@ export function useUpdateBroadcast() {
       queryClient.invalidateQueries({
         queryKey: notificationKeys.adminBroadcasts(),
       });
-      toast.success("Broadcast updated");
+      toast.success("Announcement updated");
     },
     onError: (error) => {
       toast.error(
-        getApiResponseError(error, { fallback: "Failed to update broadcast" }),
+        getApiResponseError(error, {
+          fallback: "Failed to update announcement",
+        }),
       );
     },
   });
@@ -307,11 +311,13 @@ export function useDeleteBroadcast() {
       queryClient.invalidateQueries({
         queryKey: notificationKeys.adminBroadcasts(),
       });
-      toast.success("Broadcast deleted");
+      toast.success("Announcement deleted");
     },
     onError: (error) => {
       toast.error(
-        getApiResponseError(error, { fallback: "Failed to delete broadcast" }),
+        getApiResponseError(error, {
+          fallback: "Failed to delete announcement",
+        }),
       );
     },
   });
@@ -325,11 +331,13 @@ export function useDeleteAllBroadcasts() {
       queryClient.invalidateQueries({
         queryKey: notificationKeys.adminBroadcasts(),
       });
-      toast.success("All broadcasts deleted");
+      toast.success("All announcements deleted");
     },
     onError: (error) => {
       toast.error(
-        getApiResponseError(error, { fallback: "Failed to delete broadcasts" }),
+        getApiResponseError(error, {
+          fallback: "Failed to delete announcements",
+        }),
       );
     },
   });
