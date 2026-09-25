@@ -195,7 +195,9 @@ export function NotificationPopover() {
                     selectMode ? exitSelectMode() : setSelectMode(true)
                   }
                   aria-label={
-                    selectMode ? "Cancel selection" : "Select notifications"
+                    selectMode
+                      ? "Cancel selection"
+                      : "Select personal notifications"
                   }
                 >
                   {selectMode ? (
@@ -239,13 +241,19 @@ export function NotificationPopover() {
               id="select-all-notifications"
               checked={allSelected}
               onCheckedChange={toggleSelectAll}
-              aria-label="Select all unread notifications"
+              aria-label={
+                allSelected
+                  ? "Deselect all personal notifications"
+                  : "Select all unread personal notifications"
+              }
             />
             <label
               htmlFor="select-all-notifications"
               className="text-xs text-muted-foreground cursor-pointer select-none"
             >
-              {allSelected ? "Deselect all" : "Select all unread"}
+              {allSelected
+                ? "Deselect all personal"
+                : "Select all unread personal"}
             </label>
           </div>
         )}
@@ -346,7 +354,7 @@ export function NotificationPopover() {
                         variant="ghost"
                         className="h-7 px-3 text-xs gap-1.5 text-destructive hover:text-destructive hover:bg-destructive/10"
                         onClick={handleDeleteSelected}
-                        aria-label="Delete selected notifications"
+                        aria-label="Delete selected personal notifications"
                       >
                         <Trash2 className="h-3 w-3" />
                         Delete
@@ -358,7 +366,7 @@ export function NotificationPopover() {
                         className="h-7 px-3 text-xs gap-1.5"
                         onClick={handleMarkSelectedRead}
                         disabled={isMarkingMany}
-                        aria-label="Mark selected notifications as read"
+                        aria-label="Mark selected personal notifications as read"
                       >
                         {isMarkingMany ? (
                           <Loader2 className="h-3 w-3 animate-spin" />
