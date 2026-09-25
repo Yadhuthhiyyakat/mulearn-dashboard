@@ -218,7 +218,7 @@ export function AdminBroadcastDialog({
             <div className="rounded-md border border-border bg-muted/40 px-3 py-2">
               <p className="text-xs text-muted-foreground">
                 <span className="font-medium text-foreground">Audience: </span>
-                All members across the platform.
+                All active members across the platform.
               </p>
             </div>
 
