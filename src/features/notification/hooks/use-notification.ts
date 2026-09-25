@@ -163,12 +163,12 @@ export function useDeleteAllPersonalNotifications() {
       queryClient.invalidateQueries({
         queryKey: notificationKeys.unreadCount(),
       });
-      toast.success("Notifications cleared");
+      toast.success("Personal notifications cleared");
     },
     onError: (error) => {
       toast.error(
         getApiResponseError(error, {
-          fallback: "Failed to clear notifications",
+          fallback: "Failed to clear personal notifications",
         }),
       );
     },
@@ -238,12 +238,12 @@ export function useDeleteAllDirectNotifications() {
     mutationFn: deleteAllDirectNotifications,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: notificationKeys.list() });
-      toast.success("All notifications cleared");
+      toast.success("Personal notifications cleared");
     },
     onError: (error) => {
       toast.error(
         getApiResponseError(error, {
-          fallback: "Failed to clear notifications",
+          fallback: "Failed to clear personal notifications",
         }),
       );
     },

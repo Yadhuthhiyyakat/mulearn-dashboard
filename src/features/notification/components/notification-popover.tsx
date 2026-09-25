@@ -389,7 +389,7 @@ export function NotificationPopover() {
                       ) : (
                         <Trash2 className="h-3 w-3" />
                       )}
-                      Clear notifications
+                      Clear personal notifications
                     </Button>
                   </div>
                 </>
